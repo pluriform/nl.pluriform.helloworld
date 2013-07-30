@@ -25,3 +25,8 @@ body {
     border: 1px solid #ccc;
     background-color: white;
 }
+
+#state {
+    position: relative;
+    bottom : 0px;
+}

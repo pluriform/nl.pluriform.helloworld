@@ -47,7 +47,7 @@ function onLoad () {
             var modelxml = parser.parseFromString (xmlhttp.responseXML, 'text/xml');
             var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
 		for (var i = 0; i < resourcesxml.length; i++) {
-                        getElement('response').innerHHTML += resourcesxml[i];
+                        getElement('response').innerHTML += resourcesxml[i];
 		}
         }
             
