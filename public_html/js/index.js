@@ -46,15 +46,20 @@ function onLoad () {
             var parser = new DOMParser ();
             var modelxml = parser.parseFromString (xmlhttp.responseXML, 'text/xml');
             var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
-
+            
             for (var i = 0; i < resourcesxml.length; i++) {
                 getElement('response').innerHTML += resourcesxml[i];
             }
-            
-            addResponse(resourcesxml.length);
-            addResponse(modelxml.getElementsByTagName ('RetrieveUrlsResponse').length);
-            addResponse(modelxml.getElementsByTagName ('PFTokenUrls').length);
-            addResponse(modelxml.getElementsByTagName ('PFTokenUrl').length);
+            try
+            {
+                addResponse(resourcesxml.length);
+                addResponse(modelxml.getElementsByTagName ('RetrieveUrlsResponse').length);
+                addResponse(modelxml.getElementsByTagName ('PFTokenUrls').length);
+                addResponse(modelxml.getElementsByTagName ('PFTokenUrl').length);
+            }
+            catch (error) {
+                
+            }
         }
         
         setState('XMLHttpRequest is er klaar mee.' + xmlhttp.status);
