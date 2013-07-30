@@ -42,7 +42,7 @@ function onLoad () {
                         alert('done use firebug to see response');
                     }
                 }
-                setState('XMLHttpRequest done.' +xmlhttp.status);
+                setState('XMLHttpRequest is er klaar mee.' +xmlhttp.status);
             };
             // Send the POST request
             xmlhttp.setRequestHeader('Content-Type', 'text/xml');
