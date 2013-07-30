@@ -39,10 +39,10 @@ function onLoad () {
                 if (xmlhttp.readyState === 4) {//http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
                     
                     if (xmlhttp.status === 200) {//http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
-                        alert('done use firebug to see response');
+                        alert(xmlhttp.responseText);
                     }
                 }
-                setState('XMLHttpRequest is er klaar mee.' +xmlhttp.status);
+                setState('XMLHttpRequest is er klaar mee.' + xmlhttp.status);
             };
             // Send the POST request
             xmlhttp.setRequestHeader('Content-Type', 'text/xml');
