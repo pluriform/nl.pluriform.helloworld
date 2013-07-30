@@ -46,12 +46,12 @@ function onLoad () {
             var parser = new DOMParser ();
             var modelxml = parser.parseFromString (xmlhttp.responseXML, 'text/xml');
             
-            getElement('response').innerHTML = modelxml + '\n';
-            
             var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
-		for (var i = 0; i < resourcesxml.length; i++) {
-                    getElement('response').innerHTML += resourcesxml[i];
-		}
+            
+            setText('state', resourcesxml.length);
+            for (var i = 0; i < resourcesxml.length; i++) {
+                getElement('response').innerHTML += resourcesxml[i];
+            }
             getElement('response').innerHTML += modelxml.getElementsByTagName ('RetrieveUrlsResponse') + '\n';
             getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrls') + '\n';
             getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrl') + '\n';
@@ -68,7 +68,10 @@ function onLoad () {
 }
 
 function setState (message) {
-    getElement('state').innerHTML = message;
+    setText('state', message);
     //document.removeChild(getElementById('load'));
 }
 
+function setText (node, message) {
+    getElement(node).innerHTML = message;
+}
