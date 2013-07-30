@@ -11,6 +11,10 @@ function onMenuKeyDown () {
     setState('menu button clicked');
 }*/
 
+function getElement (id) {
+    return document.getElementById(id);
+}
+
 function onLoad () {
     setState('Load complete.');
     
@@ -36,23 +40,29 @@ function onLoad () {
     
     
     xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState === 4) {//http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
-                    
-                    if (xmlhttp.status === 200) {//http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
-                        alert(xmlhttp.responseText);
-                    }
-                }
-                setState('XMLHttpRequest is er klaar mee.' + xmlhttp.status);
-            };
-            // Send the POST request
-            xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-            xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
-            xmlhttp.send(sr);
-            setState('Send XMLHttpRequest');
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
+        if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
+            var parser = new DOMParser ();
+            var modelxml = parser.parseFromString (xmlhttp.responseXML, 'text/xml');
+            var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
+		for (var i = 0; i < resourcesxml.length; i++) {
+                        getElement('response').innerHHTML += resourcesxml[i];
+		}
+        }
+            
+        setState('XMLHttpRequest is er klaar mee.' + xmlhttp.status);
+    };
+    
+    // Send the POST request
+    xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+    xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
+    xmlhttp.send(sr);
+    setState('Send XMLHttpRequest');
 }
 
 function setState (message) {
-    document.getElementById('state').innerHTML = message;
+    getElement('state').innerHTML = message;
     //document.removeChild(getElementById('load'));
 }
 
