@@ -53,12 +53,12 @@ function onLoad () {
             try
             {
                 addResponse(resourcesxml.length);
-                addResponse(modelxml.getElementsByTagName ('RetrieveUrlsResponse').length);
-                addResponse(modelxml.getElementsByTagName ('PFTokenUrls').length);
-                addResponse(modelxml.getElementsByTagName ('PFTokenUrl').length);
+                addResponse(modelxml.getElementsByTagName ('PFTokenUrl').length || 0);
+                addResponse(modelxml.getElementsByTagName ('PFTokenUrls').length || 0);
+                addResponse(modelxml.getElementsByTagName ('RetrieveUrlsResponse').length || 0);                
             }
             catch (error) {
-                
+                addResponse(error);
             }
         }
         
