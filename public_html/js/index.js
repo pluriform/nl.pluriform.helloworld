@@ -17,7 +17,7 @@ function onLoad () {
     setState('Create XMLHttpRequest');
     //https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls/');
+    xmlhttp.open('POST', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     
      // build SOAP request
     var sr =
@@ -46,6 +46,7 @@ function onLoad () {
             };
             // Send the POST request
             xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+            xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
             xmlhttp.send(sr);
             setState('Send XMLHttpRequest');
 }
