@@ -12,9 +12,10 @@ function onMenuKeyDown () {
 }
 
 function onLoad () {
-    setState('Load complete.');
+    //setState('Load complete.');
 }
 
 function setState (message) {
     document.getElementById('state').innerHTML = message;
+    document.removeChild(getElementById('load'));
 }
