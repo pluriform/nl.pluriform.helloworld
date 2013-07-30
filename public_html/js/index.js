@@ -45,13 +45,16 @@ function onLoad () {
         if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
             var parser = new DOMParser ();
             var modelxml = parser.parseFromString (xmlhttp.responseXML, 'text/xml');
+            
+            getElement('response').innerHTML = modelxml + '\n';
+            
             var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
 		for (var i = 0; i < resourcesxml.length; i++) {
                     getElement('response').innerHTML += resourcesxml[i];
 		}
-            getElement('response').innerHTML += modelxml.getElementsByTagName ('RetrieveUrlsResponse');
-            getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrls');
-            getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrl');
+            getElement('response').innerHTML += modelxml.getElementsByTagName ('RetrieveUrlsResponse') + '\n';
+            getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrls') + '\n';
+            getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrl') + '\n';
         }
         
         setState('XMLHttpRequest is er klaar mee.' + xmlhttp.status);
