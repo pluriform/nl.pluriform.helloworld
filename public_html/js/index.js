@@ -45,16 +45,16 @@ function onLoad () {
         if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
             var parser = new DOMParser ();
             var modelxml = parser.parseFromString (xmlhttp.responseXML, 'text/xml');
-            
             var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
-            
-            setText('state', resourcesxml.length);
+
             for (var i = 0; i < resourcesxml.length; i++) {
                 getElement('response').innerHTML += resourcesxml[i];
             }
-            getElement('response').innerHTML += modelxml.getElementsByTagName ('RetrieveUrlsResponse') + '\n';
-            getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrls') + '\n';
-            getElement('response').innerHTML += modelxml.getElementsByTagName ('PFTokenUrl') + '\n';
+            
+            addResponse(resourcesxml.length);
+            addResponse(modelxml.getElementsByTagName ('RetrieveUrlsResponse').length);
+            addResponse(modelxml.getElementsByTagName ('PFTokenUrls').length);
+            addResponse(modelxml.getElementsByTagName ('PFTokenUrl').length);
         }
         
         setState('XMLHttpRequest is er klaar mee.' + xmlhttp.status);
@@ -70,6 +70,10 @@ function onLoad () {
 function setState (message) {
     setText('state', message);
     //document.removeChild(getElementById('load'));
+}
+
+function addResponse (response) {
+    setText('response', response + '\n');
 }
 
 function setText (node, message) {
