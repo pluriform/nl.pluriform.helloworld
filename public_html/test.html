@@ -1,0 +1,32 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+        <script type="text/javascript" src="js/index.js" ></script>
+        <script type="text/javascript">
+        var xml = '<?xml version="1.0" encoding="utf-8"?>' +
+        '<soapenv11:Envelope xmlns:soapenv11="http://schemas.xmlsoap.org/soap/envelope/">' +
+        '<soapenv11:Body>' +
+        '<pftoken-device:RetrieveUrlsResponse xmlns:pftoken-device="pluriform:pftokenframework:device">' +
+          '<pftoken-device:PFTokenUrls>' +
+            '<pftoken-device:PFTokenUrl name="Community" host="www.pluriform.nl" path="/xmlservices/" />' +
+            '<pftoken-device:PFTokenUrl name="van extel" host="pc-kve.pluriform.lan" path="/android/xmlservices/" />' +
+          '</pftoken-device:PFTokenUrls>' +
+        '</pftoken-device:RetrieveUrlsResponse>' +
+        '</soapenv11:Body>' +
+        '</soapenv11:Envelope>';
+        
+        </script>
+    </head>
+    <body onLoad="parse(xml);">
+        <h1>TEST</h1>
+        
+        <div id="response"></div>
+    </body>
+</html>

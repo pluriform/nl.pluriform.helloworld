@@ -7,14 +7,23 @@
         <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
         <!--<script type="text/javascript" src="phonegap.js"></script>-->
         <script type="text/javascript" src="js/index.js" ></script>
-         <script type="text/javascript" src="XMLHttpRequest.js"></script>
+        <script type="text/javascript" src="XMLHttpRequest.js"></script>
         <script type="text/javascript">            
             onInit();
         </script>
     </head>
-    <body onLoad="onLoad();">
+    <body onLoad="stopLoad();">
         <h1>Hello Pluriform</h1>
         <div id="response"></div>
-        <div id="state"><img id="load" src="images/ajax-loader.gif" />Booting device...</div>
+        <div id="loading"><img src="images/ajax-loader.gif" />Loading...</div>
+        <a href="test.html">test</a>
+        <div id="buttonarea">
+            <button onclick="retrieveUrls();">Retrieve Urls</button>
+        </div>
+             
+        <div id="debugbuttons">
+            <button onclick="JavaScript: startLoad();">start</button>
+            <button onclick="JavaScript: stopLoad();">stop</button>
+        </div>
     </body>
 </html>

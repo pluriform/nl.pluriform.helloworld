@@ -1,3 +1,39 @@
+function onDeviceReady() {
+    //setState('Device ready..');
+}
+
+function onInit () {
+    //document.addEventListener('deviceready', onDeviceReady, false);
+    //document.addEventListener('menubutton', onMenuKeyDown, false);
+}
+
+function onMenuKeyDown () {
+    setState('menu button clicked');
+}
+
+function getElement (id) {
+    return document.getElementById(id);
+}
+
+function startLoad () {
+    document.getElementById('loading').setAttribute('style', 'display:none;');
+    document.getElementById('buttons').setAttribute('style', 'display:block;');
+}
+
+function stopLoad () {
+    document.getElementById('buttons').setAttribute('style', 'display:none;');
+    document.getElementById('loading').setAttribute('style', 'display:block;');
+}
+
+function setState (message) {
+    setText('state', message);
+    //document.removeChild(getElementById('load'));
+}
+
+function setText (node, message) {
+    getElement(node).innerHTML = message;
+}
+
 function parse (xml) {
     
     var parser = new DOMParser ();
@@ -12,11 +48,10 @@ function parse (xml) {
         document.getElementById('response').innerHTML += pftokenurl.getAttribute('path');
     }
 }
-
 function retrieveUrls () {
-    startLoad();
+    setState('Create XMLHttpRequest');
     //https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
-    var xmlhttp = new XMLHttpRequest();
+    /*var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     
      // build SOAP request
@@ -39,23 +74,15 @@ function retrieveUrls () {
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
         if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
-            parse(xmlhttp.responseXML);
+            parse(xmlhttp.xml);
         }
         
-        stopLoad();
+        setState('XMLHttpRequest is er klaar mee.' + xmlhttp.status);
     };
     
     // Send the POST request
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     xmlhttp.send(sr);
-    setState('Send XMLHttpRequest');
-}
-
-function startLoad () {
-    document.getElementById('loading').setAttribute('style', 'display:block;');   
-}
-
-function stopLoad () {
-    document.getElementById('loading').setAttribute('style', 'display:none;');
+    setState('Send XMLHttpRequest');*/
 }
