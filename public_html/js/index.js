@@ -56,7 +56,6 @@ function retrieveUrls () {
     xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     document.getElementById('state').innerHTML = 'xmlhttp.send';
     xmlhttp.send(EXAMPLE_RetrieveUrlsRequest);
-    setState('Send XMLHttpRequest');
 }
 
 function startLoad () {
