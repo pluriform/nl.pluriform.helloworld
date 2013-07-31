@@ -31,6 +31,7 @@ function retrieveUrls () {
         document.getElementById('state').innerHTML = 'onreadystatechange, xmlhttp.readyState: ' + xmlhttp.readyState + ', xmlhttp.status: ' + xmlhttp.status;
         
         if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
+            alert(xmlhttp.responseXML);
             var urls = parse(xmlhttp.responseXML);
             var response = '<table border="1">';
 
@@ -56,6 +57,7 @@ function retrieveUrls () {
     xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     document.getElementById('state').innerHTML = 'xmlhttp.send';
     xmlhttp.send(EXAMPLE_RetrieveUrlsRequest);
+    document.getElementById('state').innerHTML = 'xmlhttp.sent';
 }
 
 function startLoad () {
