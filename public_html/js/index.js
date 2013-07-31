@@ -56,28 +56,6 @@ function retrieveUrls () {
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     document.getElementById('state').innerHTML = 'xmlhttp.send';
-    
-    var EXAMPLE_RetrieveUrlsRequest =
-        '<?xml version="1.0" encoding="utf-8"?>' +
-        '<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" ' +
-            'xmlns:d="http://www.w3.org/2001/XMLSchema" ' + 
-            'xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" ' + 
-            'xmlns:v="http://schemas.xmlsoap.org/soap/envelope/">' +
-        '<v:Header />' +
-            '<v:Body>' +
-            '<n0:RetrieveUrlsRequest xmlns:n0="pluriform:pftokenframework:device">' + 
-                '<n0:Device installation_id="c11bd7e9-ff47-4ca7-887d-3bfba3d34e61" ' + 
-                    'device_id="000000000000000" ' + 
-                    'manufacturer="unknown"' + 
-                    'model="sdk"' + 
-                    'resolution_x="720"' + 
-                    'resolution_y="1280"' + 
-                    'sdk_int="10"' + 
-                    'unique_id="ce1705cc680b1fde" />' +
-                '</n0:RetrieveUrlsRequest>' +
-            '</v:Body>' +
-        '</v:Envelope>';
-
     xmlhttp.send(EXAMPLE_RetrieveUrlsRequest);
     document.getElementById('state').innerHTML = 'xmlhttp.sent';
 }
