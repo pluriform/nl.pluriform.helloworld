@@ -1,16 +1,19 @@
-function parse (xml) {
-    
+function parse (xml) {    
     var parser = new DOMParser ();
     var modelxml = parser.parseFromString (xml, 'text/xml');
     var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
 
+    var pftokenurls = [];
+
     for (var i = 0; i < resourcesxml.length; i++) {
-        var pftokenurl = resourcesxml[i];
+        var url = resourcesxml[i];
         
-        document.getElementById('response').innerHTML += pftokenurl.getAttribute('name');
-        document.getElementById('response').innerHTML += pftokenurl.getAttribute('host');
-        document.getElementById('response').innerHTML += pftokenurl.getAttribute('path');
+        pftokenurls.push({'name' : url.getAttribute('name'),
+        'host' : url.getAttribute('host'),
+        'path' : url.getAttribute('path')});
     }
+    
+    return pftokenurls;
 }
 
 function retrieveUrls () {
@@ -39,7 +42,20 @@ function retrieveUrls () {
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
         if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
-            parse(xmlhttp.responseXML);
+            var urls = parse(xmlhttp.responseXML);
+            
+            var response = '<table>';
+            
+            for(var i = 0; i < urls.length; i++) {
+                response += '<tr>';
+                for(var j = 0; j < urls[i].length; j++) {
+                    response += '<td>' + j + urls[i][j] + '</td>';
+                }
+                response += '</tr>';
+            }
+            
+            response += '</table>';
+            document.getElementById('response').innerHTML = response;
         }
         
         stopLoad();
