@@ -22,12 +22,14 @@ function retrieveUrls () {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     
-     // build SOAP request
-    var sr = EXAMPLE_RetrieveUrlsRequest;
+    document.getElementById('state').innerHTML = 'xmlhttp.open';
 
     xmlhttp.onreadystatechange = function () {
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
+        
+        document.getElementById('state').innerHTML = 'onreadystatechange, xmlhttp.readyState: ' + xmlhttp.readyState + ', xmlhttp.status: ' + xmlhttp.status;
+        
         if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
             var urls = parse(xmlhttp.responseXML);
             var response = '<table border="1">';
@@ -52,7 +54,8 @@ function retrieveUrls () {
     // Send the POST request
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
-    xmlhttp.send(sr);
+    document.getElementById('state').innerHTML = 'xmlhttp.send';
+    xmlhttp.send(EXAMPLE_RetrieveUrlsRequest);
     setState('Send XMLHttpRequest');
 }
 
