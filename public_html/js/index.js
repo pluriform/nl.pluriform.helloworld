@@ -1,19 +1,31 @@
-function parse (xml) {    
+function parse (xml, object) {    
+    var array = [];
+    
     var parser = new DOMParser ();
     var modelxml = parser.parseFromString (xml, 'text/xml');
-    var resourcesxml = modelxml.getElementsByTagName ('PFTokenUrl');
-
-    var pftokenurls = [];
-
-    for (var i = 0; i < resourcesxml.length; i++) {
-        var url = resourcesxml[i];
+    
+    try {
+        throw 4;
+    }
+    catch(exception) {
         
-        pftokenurls.push({'name' : url.getAttribute('name'),
-        'host' : url.getAttribute('host'),
-        'path' : url.getAttribute('path')});
     }
     
-    return pftokenurls;
+    var resourcesxml = modelxml.getElementsByTagName (object.XML_MESSAGE);
+    
+    if(resourcesxml) {
+       for (var i = 0; i < resourcesxml.length; i++) {
+           var urlxml = resourcesxml[i];
+           var url = {};
+           for(var j = 0; j < object.XML_ATTRS.length; j++) {
+               url[object.XML_ATTRS[j]] = urlxml.getAttribute(object.XML_ATTRS[j]);
+           }
+
+           array.push(url);
+       }   
+    }
+    
+    return array;
 }
 
 function retrieveUrls () {
@@ -30,9 +42,10 @@ function retrieveUrls () {
         
         document.getElementById('state').innerHTML = 'onreadystatechange, xmlhttp.readyState: ' + xmlhttp.readyState + ', xmlhttp.status: ' + xmlhttp.status;
         
-        if((xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
-            alert(xmlhttp.responseXML);
-            var urls = parse(xmlhttp.responseXML);
+        /*if((xmlhttp.readyState === 4) && (xmlhttp.status === 200))*/ {
+            //var urls = parse(xmlhttp.responseXML);
+            var urls = parse(EXAMPLE_RetrieveUrlsResponse, PFTokenUrl);
+            
             var response = '<table border="1">';
 
             for(var i = 0; i < urls.length; i++) {
@@ -61,7 +74,7 @@ function retrieveUrls () {
 }
 
 function startLoad () {
-    document.getElementById('loading').setAttribute('style', 'display:block;');   
+    document.getElementById('loading').setAttribute('style', 'display:block;');
 }
 
 function stopLoad () {

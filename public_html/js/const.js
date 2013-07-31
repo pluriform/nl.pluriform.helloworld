@@ -1,5 +1,14 @@
-var EXAMPLE_RetrieveUrlsRequest =
-        '<?xml version="1.0" encoding="utf-8"?>' +
+var PFTokenUrl = {
+    'XML_MESSAGE' : 'PFTokenUrl',
+    'XML_ATTR_NAME' : 'name',
+    'XML_ATTR_HOST' : 'host',
+    'XML_ATTR_PATH' : 'path',
+    'XML_ATTRS' : []
+};
+
+PFTokenUrl.XML_ATTRS = [PFTokenUrl.XML_ATTR_NAME, PFTokenUrl.XML_ATTR_HOST, PFTokenUrl.XML_ATTR_PATH]
+
+var EXAMPLE_RetrieveUrlsRequest = '<?xml version="1.0" encoding="utf-8"?>' +
         '<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" ' +
             'xmlns:d="http://www.w3.org/2001/XMLSchema" ' + 
             'xmlns:c="http://schemas.xmlsoap.org/soap/encoding/" ' + 
@@ -19,8 +28,7 @@ var EXAMPLE_RetrieveUrlsRequest =
             '</v:Body>' +
         '</v:Envelope>';
 
-var EXAMPLE_RetrieveUrlsResponse = 
-        '<?xml version="1.0" encoding="utf-8"?>' +
+var EXAMPLE_RetrieveUrlsResponse = '<?xml version="1.0" encoding="utf-8"?>' +
         '<soapenv11:Envelope xmlns:soapenv11="http://schemas.xmlsoap.org/soap/envelope/">' +
         '<soapenv11:Body>' +
             '<pftoken-device:RetrieveUrlsResponse xmlns:pftoken-device="pluriform:pftokenframework:device">' +
