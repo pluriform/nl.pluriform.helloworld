@@ -67,7 +67,9 @@ function _parseXMLToObject (xml, object) {
         var resourcesxml = modelxml.getElementsByTagName (object.XML_MESSAGE);
 
         if(resourcesxml) {
-            update('_parseXMLToObject resourcesxml');
+            update('_parseXMLToObject resourcesxml ' + resourcesxml);
+            update('_parseXMLToObject resourcesxml ' + resourcesxml.length);
+            update('_parseXMLToObject resourcesxml ' + printObject(resourcesxml));
             for (var i = 0; i < resourcesxml.length; i++) {
                 update('_parseXMLToObject obj');
                 var objectxml = resourcesxml[i];
@@ -84,6 +86,11 @@ function _parseXMLToObject (xml, object) {
     update('_parseXMLToObject end');
     
     return array;
+}
+
+function onDeviceReady () {
+    DEBUG = false;
+    alert(DEBUG);
 }
 
 function printObject (object) {
