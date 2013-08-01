@@ -1,76 +1,132 @@
-function parse (xml, object) {    
+var _onRetrieveToken = function () {
+    alert('retrieve token');
+}
+
+var _onRetrieveUrls = function (xml) {
+    var urls = parseXMLToObject(xml, PFTokenUrl);
+    var elt = document.getElementById('response');
+
+    for (var i = 0; i < urls.length; i++) {
+        var btn = document.createElement ('button');
+        btn.innerText = urls[i][PFTokenUrl.XML_ATTR_NAME];
+        btn.onclick = (function (idx) {
+            return function () {
+                retrieveToken (urls[idx]);
+            };
+        }) (i);
+        elt.appendChild (btn);
+    }
+}
+
+function parseXMLToObject (xml, object) {    
     var array = [];
     
-    var parser = new DOMParser ();
-    var modelxml = parser.parseFromString (xml, 'text/xml');
-    
-    try {
-        throw 4;
-    }
-    catch(exception) {
-        
-    }
-    
-    var resourcesxml = modelxml.getElementsByTagName (object.XML_MESSAGE);
-    
-    if(resourcesxml) {
-       for (var i = 0; i < resourcesxml.length; i++) {
-           var urlxml = resourcesxml[i];
-           var url = {};
-           for(var j = 0; j < object.XML_ATTRS.length; j++) {
-               url[object.XML_ATTRS[j]] = urlxml.getAttribute(object.XML_ATTRS[j]);
-           }
+    if(xml) {
+        var parser = new DOMParser ();
+        var modelxml = parser.parseFromString (xml, 'text/xml');
+        var resourcesxml = modelxml.getElementsByTagName (object.XML_MESSAGE);
 
-           array.push(url);
-       }   
+        if(resourcesxml) {
+           for (var i = 0; i < resourcesxml.length; i++) {
+               var objectxml = resourcesxml[i];
+               var obj = {};
+               for(var j = 0; j < object.XML_ATTRS.length; j++) {
+                   obj[object.XML_ATTRS[j]] = objectxml.getAttribute(object.XML_ATTRS[j]);
+               }
+
+               array.push(obj);
+           }   
+        }
     }
     
     return array;
 }
 
+function printObject (object) {
+    var result = "";
+    var first = true;
+    
+    result = "object {";
+    
+    if(object) {    
+        for(var property in object) {
+            if(!first)
+                result += ", ";
+            
+            result += "'" + property + "' : '" + object[property] + "'";
+            
+            first = false;
+        }
+    }
+    else
+        result += 'undefined';
+    
+    result += "};";
+    
+    return result;
+}
+
+function retrieveToken (url) {
+    alert('https://' + url[PFTokenUrl.XML_ATTR_HOST] + url[PFTokenUrl.XML_ATTR_PATH]);
+}
+
 function retrieveUrls () {
     startLoad();
     //https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open('POST', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
     
-    document.getElementById('state').innerHTML = 'xmlhttp.open';
+    var xmlhttp = new XMLHttpRequest();
+    var url = 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls';
+    xmlhttp.open('POST', url);
 
     xmlhttp.onreadystatechange = function () {
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
-        
-        document.getElementById('state').innerHTML = 'onreadystatechange, xmlhttp.readyState: ' + xmlhttp.readyState + ', xmlhttp.status: ' + xmlhttp.status;
-        
-        /*if((xmlhttp.readyState === 4) && (xmlhttp.status === 200))*/ {
-            //var urls = parse(xmlhttp.responseXML);
-            var urls = parse(EXAMPLE_RetrieveUrlsResponse, PFTokenUrl);
+        if(DEBUG || (xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
+            _onRetrieveUrls((DEBUG) ? EXAMPLE_RetrieveUrlsResponse : xmlhttp.responseXML);
+        }
+        else {
+            alert('XMLHttpRequest failed!' + '\n' +
+                '- state [' + xmlhttp.readyState + ']\n' +
+                '- status [' + (xmlhttp.statusText || xmlhttp.status) + ']');
+        }
             
-            var response = '<table border="1">';
+        stopLoad();
+    }
 
-            for(var i = 0; i < urls.length; i++) {
-                response += '<tr>';
-                var url = urls[i];
-                for (var prop in url) {
-                    response += '<td>' + prop + '</td>';
-                    response += '<td>' + url[prop] + '</td>';
-                }
-                response += '</tr>';
+    //xmlhttp.onreadystatechange = _onRetrieveUrls;
+    /*function () {
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
+        //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
+        
+        if(DEBUG || (xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
+            var urls = parseXMLToObject(((DEBUG) ? EXAMPLE_RetrieveUrlsResponse : xmlhttp.responseXML), PFTokenUrl);
+            
+            var elt = document.getElementById('response');
+            
+            for (var i = 0; i < urls.length; i++) {
+                var btn = document.createElement ('button');
+                btn.innerText = urls[i][PFTokenUrl.XML_ATTR_NAME];
+                btn.onclick = (function (idx) {
+                    return function () {
+                        retrieveToken (urls[idx]);
+                    };
+                }) (i);
+                elt.appendChild (btn);
             }
-
-            response += '</table>';
-            document.getElementById('response').innerHTML = response;
+        }
+        else {
+            alert('XMLHttpRequest failed!' + '\n' +
+                '- state [' + xmlhttp.readyState + ']\n' +
+                '- status [' + (xmlhttp.statusText || xmlhttp.status) + ']');
         }
         
         stopLoad();
-    };
+    };*/
     
     // Send the POST request
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-    xmlhttp.setRequestHeader('SOAPAction', 'https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls');
-    document.getElementById('state').innerHTML = 'xmlhttp.send';
+    xmlhttp.setRequestHeader('SOAPAction', url);
     xmlhttp.send(EXAMPLE_RetrieveUrlsRequest);
-    document.getElementById('state').innerHTML = 'xmlhttp.sent';
 }
 
 function startLoad () {

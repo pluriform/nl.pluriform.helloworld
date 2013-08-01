@@ -1,3 +1,5 @@
+var DEBUG = true;
+
 var PFTokenUrl = {
     'XML_MESSAGE' : 'PFTokenUrl',
     'XML_ATTR_NAME' : 'name',
