@@ -12,7 +12,7 @@ function _httpRequest (url, xml, callback, resultxml) {
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
         if(DEBUG || (xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
             update('_httpRequest before callback');
-            callback((xmlhttp.responseXML || ((DEBUG) ? resultxml : null)));
+            callback((xmlhttp.responseText || ((DEBUG) ? resultxml : null)));
             update('_httpRequest after callback');
         }
         else {
@@ -90,7 +90,6 @@ function _parseXMLToObject (xml, object) {
 
 function onDeviceReady () {
     DEBUG = false;
-    alert(DEBUG);
 }
 
 function printObject (object) {
