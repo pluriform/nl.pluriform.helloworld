@@ -1,7 +1,5 @@
 function _httpRequest (url, xml, callback, resultxml) {
     startLoad();
-    
-    update('_httpRequest ' + url + xml);
     //https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', url);
@@ -36,12 +34,12 @@ function _httpRequest (url, xml, callback, resultxml) {
 }
 
 var _onRetrieveToken = function (xml) {
-    var token = parseXMLToObject(xml, PFToken)[0];
+    var token = _parseXMLToObject(xml, PFToken)[0];
     alert('token = ' + token[PFToken.XML_ATTR_TOKEN]);
 };
 
 var _onRetrieveUrls = function (xml) {
-    var urls = parseXMLToObject(xml, PFTokenUrl);
+    var urls = _parseXMLToObject(xml, PFTokenUrl);
     var elt = document.getElementById('response');
 
     for (var i = 0; i < urls.length; i++) {
@@ -57,25 +55,33 @@ var _onRetrieveUrls = function (xml) {
     }
 };
 
-function parseXMLToObject (xml, object) {    
+function _parseXMLToObject (xml, object) {    
     var array = [];
     
+    update('_parseXMLToObject begin');
+    
     if(xml) {
+        update('_parseXMLToObject xml');
         var parser = new DOMParser ();
         var modelxml = parser.parseFromString (xml, 'text/xml');
         var resourcesxml = modelxml.getElementsByTagName (object.XML_MESSAGE);
 
         if(resourcesxml) {
-           for (var i = 0; i < resourcesxml.length; i++) {
-               var objectxml = resourcesxml[i];
-               var obj = {};
-               for(var j = 0; j < object.XML_ATTRS.length; j++) {
-                   obj[object.XML_ATTRS[j]] = objectxml.getAttribute(object.XML_ATTRS[j]);
-               }
-               array.push(obj);
-            }
+            update('_parseXMLToObject resourcesxml');
+            for (var i = 0; i < resourcesxml.length; i++) {
+                update('_parseXMLToObject obj');
+                var objectxml = resourcesxml[i];
+                var obj = {};
+                for(var j = 0; j < object.XML_ATTRS.length; j++) {
+                    update('_parseXMLToObject XML_ATTRS');
+                    obj[object.XML_ATTRS[j]] = objectxml.getAttribute(object.XML_ATTRS[j]);
+                }
+                array.push(obj);
+             }
         }
     }
+    
+    update('_parseXMLToObject end');
     
     return array;
 }
