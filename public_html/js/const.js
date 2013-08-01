@@ -26,11 +26,11 @@ var EXAMPLE_RetrieveUrlsRequest = '<?xml version="1.0" encoding="utf-8"?>' +
             '<n0:RetrieveUrlsRequest xmlns:n0="pluriform:pftokenframework:device">' + 
                 '<n0:Device installation_id="c11bd7e9-ff47-4ca7-887d-3bfba3d34e61" ' + 
                     'device_id="000000000000000" ' + 
-                    'manufacturer="unknown"' + 
-                    'model="sdk"' + 
-                    'resolution_x="720"' + 
-                    'resolution_y="1280"' + 
-                    'sdk_int="10"' + 
+                    'manufacturer="unknown" ' + 
+                    'model="sdk" ' + 
+                    'resolution_x="720" ' + 
+                    'resolution_y="1280" ' + 
+                    'sdk_int="10" ' + 
                     'unique_id="ce1705cc680b1fde" />' +
                 '</n0:RetrieveUrlsRequest>' +
             '</v:Body>' +
