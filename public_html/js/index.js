@@ -1,17 +1,24 @@
 function _httpRequest (url, xml, callback, resultxml) {
     startLoad();
     
+    update('_httpRequest ' + url + xml);
     //https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open('POST', url);
 
+    update('_httpRequest open');
+    
     xmlhttp.onreadystatechange = function () {
+        update('_httpRequest onreadystatechange');
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
         if(DEBUG || (xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
+            update('_httpRequest before callback');
             callback((xmlhttp.responseXML || ((DEBUG) ? resultxml : null)));
+            update('_httpRequest after callback');
         }
         else {
+            update('_httpRequest failed');
             alert('XMLHttpRequest failed!' + '\n' +
                 '- state [' + xmlhttp.readyState + ']\n' +
                 '- status [' + (xmlhttp.statusText || xmlhttp.status) + ']');
@@ -23,7 +30,9 @@ function _httpRequest (url, xml, callback, resultxml) {
     // Send the POST request
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.setRequestHeader('SOAPAction', url);
+    update('_httpRequest send');
     xmlhttp.send(xml);
+    update('_httpRequest sent');
 }
 
 var _onRetrieveToken = function (xml) {
@@ -44,7 +53,7 @@ var _onRetrieveUrls = function (xml) {
             };
         }) (i);
         elt.appendChild (btn);
-        alert('button added');
+        update('button added');
     }
 };
 
@@ -110,4 +119,8 @@ function startLoad () {
 
 function stopLoad () {
     document.getElementById('loading').setAttribute('style', 'display:none;');
+}
+
+function update (text) {
+    document.getElementById('state').innerText += text + '\n';
 }
