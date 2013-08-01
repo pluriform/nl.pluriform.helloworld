@@ -1,3 +1,7 @@
+function _getElement (id) {
+    return document.getElementById(id);
+}
+
 function _httpRequest (url, xml, callback, resultxml) {
     startLoad();
     //https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
@@ -5,6 +9,8 @@ function _httpRequest (url, xml, callback, resultxml) {
     xmlhttp.open('POST', url);
 
     xmlhttp.onreadystatechange = function () {
+        stopLoad();
+        
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms753702%28v=vs.85%29.aspx
         //http://msdn.microsoft.com/en-us/library/windows/desktop/ms767625%28v=vs.85%29.aspx
         if(DEBUG || (xmlhttp.readyState === 4) && (xmlhttp.status === 200)) {
@@ -15,8 +21,6 @@ function _httpRequest (url, xml, callback, resultxml) {
                 '- state [' + xmlhttp.readyState + ']\n' +
                 '- status [' + (xmlhttp.statusText || xmlhttp.status) + ']');
         }
-            
-        stopLoad();
     };
     
     // Send the POST request
@@ -32,7 +36,7 @@ var _onRetrieveToken = function (xml) {
 
 var _onRetrieveUrls = function (xml) {
     var urls = _parseXMLToObject(xml, PFTokenUrl);
-    var elt = document.getElementById('response');
+    var elt = dataElement();
 
     for (var i = 0; i < urls.length; i++) {
         var btn = document.createElement ('button');
@@ -68,9 +72,13 @@ function _parseXMLToObject (xml, object) {
     return array;
 }
 
+function dataElement () {
+    return _getElement('data');
+}
+
 function onDeviceReady () {
     DEBUG = false;
-    var elt = document.getElementById('phonegap');
+    var elt = _getElement('phonegap');
     elt.innerText = 'PhoneGap: ready, connection: ' + navigator.network.connection.type;
 }
 
@@ -104,17 +112,19 @@ function retrieveToken (url) {
 }
 
 function retrieveUrls () {
+    elt = dataElement().innerText = '';
+        
     _httpRequest('https://www.pluriform.nl/xmlservices/PFTokenDevice/soap11/RetrieveUrls', EXAMPLE_RetrieveUrlsRequest, _onRetrieveUrls, EXAMPLE_RetrieveUrlsResponse);
 }
 
 function startLoad () {
-    document.getElementById('loading').setAttribute('style', 'display:block;');
+    _getElement('loading').setAttribute('style', 'display:block;');
 }
 
 function stopLoad () {
-    document.getElementById('loading').setAttribute('style', 'display:none;');
+    _getElement('loading').setAttribute('style', 'display:none;');
 }
 
 function updateState (text) {
-    document.getElementById('state').innerText += text + '\n';
+    _getElement('state').innerText += text + '\n';
 }
