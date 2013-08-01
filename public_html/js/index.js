@@ -44,6 +44,7 @@ var _onRetrieveUrls = function (xml) {
             };
         }) (i);
         elt.appendChild (btn);
+        alert('button added');
     }
 };
 
