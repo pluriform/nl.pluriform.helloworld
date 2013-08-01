@@ -1,11 +1,3 @@
-/* 
-    Document   : stylesheet
-    Created on : 30-jul-2013, 12:41:35
-    Author     : k.van.extel
-    Description:
-        Purpose of the stylesheet follows.
-*/
-
 root { 
     display: block;
 }
@@ -31,9 +23,9 @@ body {
     bottom : 0px;
 }
 
-#response {
+/*#response {
     width:29em;
     height:2em;
     border: 1px solid #ccc;
     background-color: #f3f3f3;
-}
+}*/
