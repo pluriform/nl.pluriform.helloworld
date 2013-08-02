@@ -76,8 +76,16 @@ function dataElement () {
     return _getElement('data');
 }
 
-function onDeviceReady () {
+function _onDeviceReady () {
     DEBUG = false;
+    var dev = getDevice ();
+    dev.installation_id = 'eb67b432-42fa-49e7-97c8-0c7833290cd2';
+    dev.device_id = '';
+    dev.manufacturer = '';
+    dev.model = '';
+    dev.sdk_int = '';
+    dev.unique_id = device.uuid;
+    
     var elt = _getElement('phonegap');
     elt.innerText = 'PhoneGap: ready, connection: ' + navigator.network.connection.type;
 }

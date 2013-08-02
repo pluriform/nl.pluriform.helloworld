@@ -16,14 +16,18 @@ var PFToken = {
 };
 PFToken.XML_ATTRS = [PFToken.XML_ATTR_TOKEN];
 
-var installation_id = 'eb67b432-42fa-49e7-97c8-0c7833290cd2';
-var device_id = '';
-var manufacturer = 'Sony';
-var model = 'SGP311';
-var sdk_int = '16';
-var unique_id = 'e0e15c41ef28a432';
-
-var retrieveUrlsRequest = function (inst_id, dev_id, man, mdl, sdk, uuid) {
+var retrieveUrlsRequest = function () {
+    var dev = getDevice();
+    
+    if(DEBUG) {
+        dev.installation_id = 'eb67b432-42fa-49e7-97c8-0c7833290cd2';
+        dev.device_id = '';
+        dev.manufacturer = 'Sony';
+        dev.model = 'SGP311';
+        dev.sdk_int = '16';
+        dev.unique_id = 'e0e15c41ef28a432';
+    }
+        
     return '<?xml version="1.0" encoding="utf-8"?>' +
             '<v:Envelope xmlns:i="http://www.w3.org/2001/XMLSchema-instance" ' +
                 'xmlns:d="http://www.w3.org/2001/XMLSchema" ' +
@@ -32,20 +36,20 @@ var retrieveUrlsRequest = function (inst_id, dev_id, man, mdl, sdk, uuid) {
             '<v:Header />' +
                 '<v:Body>' +
                     '<n0:RetrieveUrlsRequest xmlns:n0="pluriform:pftokenframework:device">' +
-                        '<n0:Device installation_id="' + inst_id + 
-                        '" device_id="' + dev_id + 
-                        '" manufacturer="' + man + 
-                        '" model="' + mdl + 
+                        '<n0:Device installation_id="' + dev.installation_id + 
+                        '" device_id="' + dev.device_id + 
+                        '" manufacturer="' + dev.manufacturer + 
+                        '" model="' + dev.model + 
                         '" resolution_x="' + window.innerWidth + 
                         '" resolution_y="' + window.innerHeight + 
-                        '" sdk_int="' + sdk + 
-                        '" unique_id="' + uuid + '" />' +
+                        '" sdk_int="' + dev.sdk_int + 
+                        '" unique_id="' + dev.unique_id + '" />' +
                     '</n0:RetrieveUrlsRequest>' +
                 '</v:Body>' +
             '</v:Envelope>';
 }
 
-var EXAMPLE_RetrieveUrlsRequest = retrieveUrlsRequest(installation_id, device_id, manufacturer, model, sdk_int, unique_id);
+var EXAMPLE_RetrieveUrlsRequest = retrieveUrlsRequest();
 
 var EXAMPLE_RetrieveUrlsResponse = '<?xml version="1.0" encoding="utf-8"?>' +
         '<soapenv11:Envelope xmlns:soapenv11="http://schemas.xmlsoap.org/soap/envelope/">' +
